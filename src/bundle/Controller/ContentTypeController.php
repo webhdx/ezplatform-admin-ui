@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroup;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
+use EzSystems\EzPlatformAdminUi\Notification\NotificationHandlerInterface;
 use EzSystems\EzPlatformAdminUi\Service\ContentTypeService;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
@@ -19,12 +20,17 @@ use EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ContentTypeController extends Controller
 {
-    /**
-     * @var ContentTypeService
-     */
+    /** @var NotificationHandlerInterface */
+    private $notificationHandler;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var ContentTypeService */
     private $contentTypeService;
 
     /**
@@ -35,13 +41,19 @@ class ContentTypeController extends Controller
     /**
      * ContentTypeController constructor.
      *
+     * @param NotificationHandlerInterface $notificationHandler
+     * @param TranslatorInterface $translator
      * @param ContentTypeService $contentTypeService
      * @param ActionDispatcherInterface $contentTypeActionDispatcher
      */
     public function __construct(
+        NotificationHandlerInterface $notificationHandler,
+        TranslatorInterface $translator,
         ContentTypeService $contentTypeService,
         ActionDispatcherInterface $contentTypeActionDispatcher)
     {
+        $this->notificationHandler = $notificationHandler;
+        $this->translator = $translator;
         $this->contentTypeService = $contentTypeService;
         $this->contentTypeActionDispatcher = $contentTypeActionDispatcher;
     }
