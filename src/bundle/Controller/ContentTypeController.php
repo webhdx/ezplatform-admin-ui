@@ -33,9 +33,7 @@ class ContentTypeController extends Controller
     /** @var ContentTypeService */
     private $contentTypeService;
 
-    /**
-     * @var ActionDispatcherInterface
-     */
+    /** @var ActionDispatcherInterface */
     private $contentTypeActionDispatcher;
 
     /**
