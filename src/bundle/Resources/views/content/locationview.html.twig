@@ -69,24 +69,55 @@
             </div>
         </div>
         <div class="col-sm-1 pt-4 bg-secondary ez-context-menu">
-            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#trash-location-modal" {% if location.depth == 1 %}disabled{% endif %}>
-                <svg class="ez-icon ez-icon-trash-send">
-                    <use xlink:href="{{ asset('bundles/ezplatformadminui/img/ez-icons.svg') }}#trash-send"></use>
-                </svg>
-                {{ 'send.to.trash'|trans|desc('Send to Trash') }}</button>
-            <button class="btn btn-secondary btn-block btn--udw-copy" data-root-location="1">
-                <svg class="ez-icon ez-icon-copy">
-                    <use xlink:href="{{ asset('bundles/ezplatformadminui/img/ez-icons.svg') }}#copy"></use>
-                </svg>
-                {{ 'copy'|trans|desc('Copy') }}
-            </button>
-            <button class="btn btn-secondary btn-block btn--udw-move" data-root-location="1" {% if location.depth == 1 %}disabled{% endif %}>
-                <svg class="ez-icon ez-icon-move">
-                    <use xlink:href="{{ asset('bundles/ezplatformadminui/img/ez-icons.svg') }}#move"></use>
-                </svg>
-                {{ 'move'|trans|desc('Move') }}
-            </button>
-
+            <div class="ez-btn-container ez-btn-container--extra-actions">
+                <button class="btn btn-secondary btn-block ez-btn--extra-actions ez-btn--edit">
+                    <svg class="ez-icon ez-icon-edit">
+                        <use xlink:href="{{ asset('bundles/ezplatformadminui/img/ez-icons.svg') }}#edit"></use>
+                    </svg>
+                    {{ 'edit.content'|trans|desc('Edit') }}
+                </button>
+                <div class="ez-extra-actions ez-extra-actions--language ez-extra-actions--hidden bg-secondary">
+                    <div class="ez-extra-actions__header">{{ 'extra.action.select.language'|trans|desc('Select language') }}</div>
+                    <div class="ez-extra-actions__content">
+                        <a
+                            href={{'/admin/content/create/draft/{contentId}/{languageCode}'|replace({
+                                '{contentId}': content.id,
+                                '{languageCode}': 'eng-GB'
+                                })}}
+                            class="ez-extra-actions__action">English (United Kingdom)</a>
+                        <a
+                            href={{'/admin/content/create/draft/{contentId}/{languageCode}'|replace({
+                                '{contentId}': content.id,
+                                '{languageCode}': 'pol-PL'
+                                })}}
+                            class="ez-extra-actions__action">Polish</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ez-btn-container">
+                <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#trash-location-modal" {% if location.depth == 1 %}disabled{% endif %}>
+                    <svg class="ez-icon ez-icon-trash-send">
+                        <use xlink:href="{{ asset('bundles/ezplatformadminui/img/ez-icons.svg') }}#trash-send"></use>
+                    </svg>
+                    {{ 'send.to.trash'|trans|desc('Send to Trash') }}
+                </button>
+            </div>
+            <div class="ez-btn-container">
+                <button class="btn btn-secondary btn-block btn--udw-copy" data-root-location="1">
+                    <svg class="ez-icon ez-icon-copy">
+                        <use xlink:href="{{ asset('bundles/ezplatformadminui/img/ez-icons.svg') }}#copy"></use>
+                    </svg>
+                    {{ 'copy'|trans|desc('Copy') }}
+                </button>
+            </div>
+            <div class="ez-btn-container">
+                <button class="btn btn-secondary btn-block btn--udw-move" data-root-location="1" {% if location.depth == 1 %}disabled{% endif %}>
+                    <svg class="ez-icon ez-icon-move">
+                        <use xlink:href="{{ asset('bundles/ezplatformadminui/img/ez-icons.svg') }}#move"></use>
+                    </svg>
+                    {{ 'move'|trans|desc('Move') }}
+                </button>
+            </div>
             {# TODO: location trash should be rendered as a form, confirmation dialog should be impl. as a type #}
             {% include 'EzPlatformAdminUiBundle:content:modal_location_trash.html.twig' with {'form': form_location_trash} %}
             {{ form(form_location_copy) }}
@@ -115,6 +146,7 @@
         'bundles/ezplatformadminui/js/scripts/udw/copy.js'
         'bundles/ezplatformadminui/js/scripts/udw/swap.js'
         'bundles/ezplatformadminui/js/scripts/udw/locations.tab.js'
+        'bundles/ezplatformadminui/js/scripts/sidebar/extra.actions.btn.js'
     %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}

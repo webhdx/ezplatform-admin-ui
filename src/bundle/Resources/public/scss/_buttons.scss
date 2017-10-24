@@ -1,3 +1,5 @@
+@import 'buttons-extra-actions';
+
 .btn-icon {
 	padding: 0;
 }
@@ -8,5 +10,10 @@
         height: 2rem;
         width: 2rem;
     }
+}
+
+.ez-btn-container--extra-actions {
+    position: relative;
+    z-index: 1;
 }
 

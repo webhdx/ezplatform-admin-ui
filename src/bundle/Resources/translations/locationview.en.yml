@@ -4,10 +4,19 @@ copy: Copy
 # Desc: Move
 move: Move
 
+edit:
+    # Desc: Edit
+    content: 'Edit'
+
 send:
     to:
         # Desc: Send to Trash
         trash: 'Send to Trash'
+
+extra:
+    action:
+        select:
+            language: 'Select language'
 
 tab:
     details:

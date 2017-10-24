@@ -1,0 +1,75 @@
+.ez-extra-actions {
+    border-radius: 8px;
+    border: 6px solid $ez-color-secondary;
+    width: 300px;
+
+    &__action {
+        display: block;
+        background: none;
+        border: 0 none;
+        width: 100%;
+        text-align: left;
+        border-radius: 4px;
+        padding: 0 16px;
+        line-height: 45px;
+        background: $ez-white;
+        color: $ez-color-secondary;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all .2s $admin-transition;
+
+        &:hover,
+        &:focus {
+            background: $ez-color-secondary;
+            color: $ez-white;
+            text-decoration: none;
+        }
+    }
+
+    &__action + &__action {
+        margin-top: 8px;
+    }
+
+    &__header {
+        line-height: 45px;
+        color: $ez-white;
+        padding: 0 8px;
+    }
+
+    &__content {
+        background: $ez-ground-base;
+        padding: 8px;
+        max-height: 300px;
+        overflow: auto;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        height: 40px;
+        width: 30px;
+        top: 50%;
+        right: 0;
+        transform: translate3d(100%, -50%, 0);
+        z-index: 0;
+        background: $ez-color-secondary;
+    }
+}
+
+.ez-btn-container--extra-actions {
+    .ez-extra-actions {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        z-index: 2;
+        opacity: 1;
+        transform: translate3d(calc(-100% - 30px), -50%, 0) scaleX(1);
+        transform-origin: right center;
+        transition: all .2s $admin-transition;
+
+        &--hidden {
+            opacity: 0;
+            transform: translate3d(calc(-100% - 15px), -50%, 0) scaleX(0);
+        }
+    }
+}
