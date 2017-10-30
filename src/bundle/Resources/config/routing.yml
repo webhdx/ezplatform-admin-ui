@@ -320,3 +320,9 @@ ezplatform.location.swap:
     methods: ['POST']
     defaults:
         _controller: 'EzPlatformAdminUiBundle:Location:swap'
+
+ezplatform.search:
+    path: /search
+    methods: ['GET']
+    defaults:
+        _controller: 'EzPlatformAdminUiBundle:Search:search'
