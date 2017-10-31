@@ -11,7 +11,7 @@ namespace EzSystems\EzPlatformAdminUi\Form\Type\Language;
 use eZ\Publish\API\Repository\LanguageService;
 use EzSystems\EzPlatformAdminUi\Form\DataTransformer\LanguageTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class LanguageType extends AbstractType
@@ -34,6 +34,6 @@ class LanguageType extends AbstractType
 
     public function getParent()
     {
-        return HiddenType::class;
+        return TextType::class;
     }
 }

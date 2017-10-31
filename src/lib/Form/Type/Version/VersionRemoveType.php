@@ -22,7 +22,7 @@ class VersionRemoveType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content_info', ContentInfoType::class)
+            ->add('content_info', ContentInfoType::class, ['attr' => ['hidden' => true]])
             ->add('versions', CollectionType::class, [
                 'entry_type' => CheckboxType::class,
                 'required' => false,

@@ -22,7 +22,7 @@ class LanguageUpdateType extends AbstractType
             ->add(
                 'language',
                 LanguageType::class,
-                ['label' => false]
+                ['label' => false, 'attr' => ['hidden' => true]]
             )
             ->add(
                 'name',

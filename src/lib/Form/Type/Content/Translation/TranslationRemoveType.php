@@ -25,7 +25,7 @@ class TranslationRemoveType extends AbstractType
             ->add(
                 'content_info',
                 ContentInfoType::class,
-                ['label' => false]
+                ['label' => false, 'attr' => ['hidden' => true]]
             )
             ->add(
                 'language_codes',

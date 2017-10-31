@@ -11,10 +11,10 @@ namespace EzSystems\EzPlatformAdminUi\Form\Type\Content\Location;
 use EzSystems\EzPlatformAdminUi\Form\Data\Content\Location\ContentLocationRemoveData;
 use EzSystems\EzPlatformAdminUi\Form\Type\Content\ContentInfoType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentLocationRemoveType extends AbstractType
@@ -25,7 +25,7 @@ class ContentLocationRemoveType extends AbstractType
             ->add(
                 'content_info',
                 ContentInfoType::class,
-                ['label' => false]
+                ['label' => false, 'attr' => ['hidden' => true]]
             )
             ->add(
                 'locations',

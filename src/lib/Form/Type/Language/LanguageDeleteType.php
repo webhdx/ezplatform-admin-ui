@@ -20,7 +20,7 @@ class LanguageDeleteType extends AbstractType
             ->add(
                 'language',
                 LanguageType::class,
-                ['label' => false]
+                ['label' => false, 'attr' => ['hidden' => true]]
             )
             ->add(
                 'delete',

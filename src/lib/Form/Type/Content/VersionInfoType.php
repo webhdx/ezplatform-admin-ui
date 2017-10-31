@@ -9,12 +9,12 @@ declare(strict_types=1);
 namespace EzSystems\EzPlatformAdminUi\Form\Type\Content;
 
 use eZ\Publish\API\Repository\ContentService;
-use EzSystems\EzPlatformAdminUi\Form\DataTransformer\ContentInfoTransformer;
+use EzSystems\EzPlatformAdminUi\Form\DataTransformer\VersionInfoTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ContentInfoType extends AbstractType
+class VersionInfoType extends AbstractType
 {
     /** @var ContentService */
     protected $contentService;
@@ -29,11 +29,17 @@ class ContentInfoType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addViewTransformer(new ContentInfoTransformer($this->contentService));
-    }
-
-    public function getParent(): ?string
-    {
-        return TextType::class;
+        $builder
+            ->add(
+                'content_info',
+                ContentInfoType::class,
+                ['label' => false, 'attr' => ['hidden' => true]]
+            )
+            ->add(
+                'version_no',
+                TextType::class,
+                ['label' => false, 'attr' => ['hidden' => true]]
+            )
+            ->addViewTransformer(new VersionInfoTransformer($this->contentService));
     }
 }
