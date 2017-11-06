@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType as CoreSearchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchType extends AbstractType
@@ -29,6 +30,8 @@ class SearchType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
+     * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {

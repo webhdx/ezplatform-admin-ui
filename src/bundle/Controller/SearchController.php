@@ -6,20 +6,20 @@
  */
 namespace EzSystems\EzPlatformAdminUiBundle\Controller;
 
-use eZ\Publish\Core\Repository\SearchService;
-use EzSystems\EzPlatformAdminUi\Form\Data\Search\SearchData;
-use EzSystems\EzPlatformAdminUi\Tab\Dashboard\PagerContentToDataMapper;
-use Pagerfanta\View\TwitterBootstrap4View;
-use Symfony\Component\HttpFoundation\Request;
+use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
-use eZ\Publish\API\Repository\Values\Content\Query;
-use Pagerfanta\Pagerfanta;
 use eZ\Publish\Core\Pagination\Pagerfanta\ContentSearchAdapter;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
+use eZ\Publish\Core\Repository\SearchService;
+use EzSystems\EzPlatformAdminUi\Form\Data\Search\SearchData;
 use EzSystems\EzPlatformAdminUi\Form\Factory\FormFactory;
 use EzSystems\EzPlatformAdminUi\Form\SubmitHandler;
+use EzSystems\EzPlatformAdminUi\Tab\Dashboard\PagerContentToDataMapper;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\View\TwitterBootstrap4View;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SearchController extends Controller
 {
@@ -29,8 +29,8 @@ class SearchController extends Controller
     /** @var PagerContentToDataMapper */
     private $pagerContentToDataMapper;
 
-    /** @var Router */
-    private $router;
+    /** @var UrlGeneratorInterface */
+    private $urlGenerator;
 
     /** @var FormFactory */
     private $formFactory;
@@ -41,20 +41,20 @@ class SearchController extends Controller
     /**
      * @param SearchService $searchService
      * @param PagerContentToDataMapper $pagerContentToDataMapper
-     * @param RouterInterface $router
+     * @param UrlGeneratorInterface $urlGenerator
      * @param FormFactory $formFactory
      * @param SubmitHandler $submitHandler
      */
     public function __construct(
         SearchService $searchService,
         PagerContentToDataMapper $pagerContentToDataMapper,
-        RouterInterface $router,
+        UrlGeneratorInterface $urlGenerator,
         FormFactory $formFactory,
         SubmitHandler $submitHandler
     ) {
         $this->searchService = $searchService;
         $this->pagerContentToDataMapper = $pagerContentToDataMapper;
-        $this->router = $router;
+        $this->urlGenerator = $urlGenerator;
         $this->formFactory = $formFactory;
         $this->submitHandler = $submitHandler;
     }
@@ -65,6 +65,8 @@ class SearchController extends Controller
      * @param Request $request
      *
      * @return Response
+     *
+     * @throws \InvalidArgumentException
      */
     public function searchAction(Request $request): Response
     {
@@ -73,14 +75,18 @@ class SearchController extends Controller
         $page = $search['page'] ?? 1;
         $query = $search['query'];
 
-        $form = $this->formFactory->createSearchForm(new SearchData($limit, $page, $query), 'search', [
-            'method' => 'GET',
-            'csrf_protection' => false,
-        ]);
+        $form = $this->formFactory->createSearchForm(
+            new SearchData($limit, $page, $query),
+            'search',
+            [
+                'method' => Request::METHOD_GET,
+                'csrf_protection' => false,
+            ]
+        );
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $result = $this->submitHandler->handle($form, function (SearchData $data) use ($form) {
                 $limit = $data->getLimit();
                 $page = $data->getPage();
@@ -97,19 +103,14 @@ class SearchController extends Controller
                 $query->sortClauses[] = new SortClause\DateModified(Query::SORT_ASC);
 
                 $pagerfanta = new Pagerfanta(
-                    new ContentSearchAdapter(
-                        $query,
-                        $this->searchService
-                    )
+                    new ContentSearchAdapter($query, $this->searchService)
                 );
 
                 $pagerfanta->setMaxPerPage($limit);
                 $pagerfanta->setCurrentPage($page);
 
-                $urlGenerator = $this->router;
-
-                $routeGenerator = function ($page) use (&$urlGenerator, $data) {
-                    return $urlGenerator->generate('ezplatform.search', [
+                $routeGenerator = function ($page) use ($data) {
+                    return $this->urlGenerator->generate('ezplatform.search', [
                         'search' => [
                             'query' => $data->getQuery(),
                             'page' => $page,
@@ -120,7 +121,7 @@ class SearchController extends Controller
 
                 $pagination = (new TwitterBootstrap4View())->render($pagerfanta, $routeGenerator);
 
-                return $this->render('@EzPlatformAdminUi/admin/search/list.html.twig', [
+                return $this->render('@EzPlatformAdminUi/admin/search/search.html.twig', [
                     'results' => $this->pagerContentToDataMapper->map($pagerfanta),
                     'form' => $form->createView(),
                     'pagination' => $pagination,
