@@ -55,7 +55,7 @@
         time_24hr: true
     };
     const updateInputValue = (sourceInput, date) => {
-        date = new Date(date);
+        date = new Date(date[0]);
 
         sourceInput.value = (date.getHours() * 3600) + (date.getMinutes() * 60) + date.getSeconds();
 
@@ -72,9 +72,9 @@
             const value = parseInt(sourceInput.value, 10);
             const date = new Date();
 
-            date.setHours(Math.floor(value / 3600));
-            date.setMinutes(Math.floor(value % 3600 / 60));
-            date.setSeconds(Math.floor(value % 3600 % 60));
+            date.setUTCHours(Math.floor(value / 3600));
+            date.setUTCMinutes(Math.floor(value % 3600 / 60));
+            date.setUTCSeconds(Math.floor(value % 3600 % 60));
 
             defaultDate = date;
         }
