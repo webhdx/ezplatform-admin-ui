@@ -25,6 +25,10 @@ parameters:
                 template: '@@ezdesign/admin/systeminfo/symfony_kernel.html.twig'
                 match:
                     SystemInfo\Identifier: 'symfony_kernel'
+            ez:
+                template: '@@ezdesign/admin/systeminfo/ez.html.twig'
+                match:
+                    SystemInfo\Identifier: 'ez'
 
     ezsettings.default.content_type.about:
         thumbnail: '/bundles/ezplatformadminui/img/ez-icons.svg#about'
