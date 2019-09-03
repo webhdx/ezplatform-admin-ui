@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace EzSystems\RepositoryForms\Validator\Constraints;
+namespace EzSystems\EzPlatformAdminUi\Validator\Constraints;
 
 use JMS\TranslationBundle\Translation\TranslationContainerInterface;
 use JMS\TranslationBundle\Model\Message;

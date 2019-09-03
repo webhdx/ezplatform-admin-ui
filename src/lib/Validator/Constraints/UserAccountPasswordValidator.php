@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace EzSystems\RepositoryForms\Validator\Constraints;
+namespace EzSystems\EzPlatformAdminUi\Validator\Constraints;
 
 use EzSystems\RepositoryForms\Data\User\UserAccountFieldData;
-use EzSystems\RepositoryForms\Validator\ValidationErrorsProcessor;
+use EzSystems\EzPlatformAdminUi\Validator\ValidationErrorsProcessor;
 use Symfony\Component\Validator\Constraint;
 
 class UserAccountPasswordValidator extends PasswordValidator
