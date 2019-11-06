@@ -8,8 +8,8 @@ namespace EzSystems\EzPlatformAdminUi\FieldType\Mapper;
 
 use EzSystems\EzPlatformAdminUi\Form\Data\FieldDefinitionData;
 use EzSystems\EzPlatformAdminUi\FieldType\FieldDefinitionFormMapperInterface;
-use EzSystems\EzPlatformContentForms\Form\DataTransformer\MultilingualSelectionTransformer;
-use EzSystems\EzPlatformContentForms\Form\EventListener\SelectionMultilingualOptionsDataListener;
+use EzSystems\EzPlatformAdminUi\Form\DataTransformer\MultilingualSelectionTransformer;
+use EzSystems\EzPlatformAdminUi\Form\EventListener\SelectionMultilingualOptionsDataListener;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
