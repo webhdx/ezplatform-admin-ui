@@ -37,7 +37,7 @@ class FieldDefinitionDefaultValueValidator extends FieldTypeValidator
         $this->processValidationErrors($validationErrors);
     }
 
-    protected function getFieldValue(FieldDefinitionData $value): Value
+    protected function getFieldValue(FieldDefinitionData $value): ?Value
     {
         return $value->defaultValue;
     }
